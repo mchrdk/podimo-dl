@@ -1,0 +1,13 @@
+services:
+  podimo-dl:
+    build: .
+    container_name: podimo-dl
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Copenhagen
+      CRON_SCHEDULE: "0 3 * * *"
+      PODIMO_ARGS: "--config --download -o /downloads"
+      RUN_ON_STARTUP: "true"
+    volumes:
+      - ./config.py:/app/config.py:ro
+      - ./downloads:/downloads
