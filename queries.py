@@ -350,6 +350,25 @@ query PodcastEpisodes($podcastId: String!, $limit: Int!, $offset: Int!) {
 }
 ''')
 
+queryPlaybackByPodcastEpisode = gql('''
+
+query PlaybackByPodcastEpisode($podcastId: ID!, $episodeId: ID!) {
+  playbackByPodcastEpisode(podcastId: $podcastId, episodeId: $episodeId) {
+    duration
+    track {
+      __typename
+      ... on MediaTrack {
+        url
+      }
+      ... on VideoMediaTrack {
+        url
+        imageUrl
+      }
+    }
+  }
+}
+''')
+
 queryOverviewQuery = gql('''
 
 query OverviewQuery($userId: String!, $podcastId: String!) {
@@ -447,7 +466,6 @@ query UsePodcastsExistQuery($search: String!) {
     id
     title
     coverImageUrl
-    rss
   }
 }
 ''')
